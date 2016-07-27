@@ -11,25 +11,26 @@ import com.nyhammer.newMON.input.Mouse;
 import com.nyhammer.newMON.ui.GameWindow;
 
 /**
- * @since Version 0.0.1a
+ * @since Version 0.1.0a
  * 
  * @author McFlyboy
  *
  */
 public class Main{
 	public static final int VERSION_MAJOR = 0;
-	public static final int VERSION_MINOR = 0;
-	public static final int VERSION_REVISION = 1;
+	public static final int VERSION_MINOR = 1;
+	public static final int VERSION_REVISION = 0;
 	public static final int VERSION_SUB_REVISION = 0;
 	public static final String PRE_VERSION_SUFFIX = "a";
 	public static final String TITLE = "New MAZE OF NEON - Version " + getVersion();
-	private ModelEntity entity;
-	private ModelEntity zero;
+	private ModelEntity cube;
+	private ModelEntity pointZeroPlane;
 	private MONShader shader;
 	private Camera camera;
-	public static float fov = 70f;
-	public static float nearPlane = 0.1f;
-	public static float farPlane = 1000f;
+	public static final float FOV = 70f;
+	public static final float NEAR_PLANE = 0.1f;
+	public static final float FAR_PLANE = 1000f;
+	public static boolean gameFocused = false;
 	public static String getVersion(){
 		StringBuilder version = new StringBuilder();
 		version.append(VERSION_MAJOR + "." + VERSION_MINOR + "." + VERSION_REVISION);
@@ -50,9 +51,9 @@ public class Main{
 			Keyboard.create();
 			Mouse.create();
 			Timer.init();
-			entity = new ModelEntity();
-			entity.model.bind();
-			entity.model.setFaces(new int[]{
+			cube = new ModelEntity();
+			cube.model.bind();
+			cube.model.setFaces(new int[]{
 					0, 1, 2,
 					0, 2, 3,
 					4, 5, 6,
@@ -66,7 +67,7 @@ public class Main{
 					3, 2, 6,
 					3, 6, 7
 			});
-			entity.model.addAttrib(0, 3, new float[]{
+			cube.model.addAttrib(0, 3, new float[]{
 					-0.5f, -0.5f, -0.5f,
 					0.5f, -0.5f, -0.5f,
 					0.5f, 0.5f, -0.5f,
@@ -76,7 +77,7 @@ public class Main{
 					0.5f, 0.5f, 0.5f,
 					-0.5f, 0.5f, 0.5f
 			});
-			entity.model.addAttrib(1, 3, new float[]{
+			cube.model.addAttrib(1, 3, new float[]{
 					0f, 0f, 1f,
 					0f, 1f, 1f,
 					1f, 1f, 0f,
@@ -87,14 +88,15 @@ public class Main{
 					0f, 1f, 1f
 			});
 			Model.unbind();
-			entity.transformation.position.z = 7f;
-			zero = new ModelEntity(entity.model);
-			zero.transformation.scale.y = 0.05f;
+			cube.transformation.position.z = 7f;
+			pointZeroPlane = new ModelEntity(cube.model);
+			pointZeroPlane.transformation.scale.y = 0.05f;
 			camera = new Camera();
-			camera.transformation.position.y = 0.75f;
+			camera.transformation.position.y = 0.5f;
+			Render.setCamera(camera);
 			shader = new MONShader();
 			Render.setShader(shader);
-			Render.setProjectionMatrix(GameWindow.getWidth(), GameWindow.getHeight(), fov, nearPlane, farPlane);
+			Render.setProjectionMatrix(GameWindow.getWidth(), GameWindow.getHeight(), FOV, NEAR_PLANE, FAR_PLANE);
 			run();
 		}
 		finally{
@@ -117,21 +119,31 @@ public class Main{
 		if(Keyboard.getKeyState(Keyboard.KEY_ESCAPE)){
 			GameWindow.close();
 		}
-		entity.transformation.angle.x += 25f * delta;
-		entity.transformation.angle.y += 50f * delta;
-		entity.transformation.angle.z += 12.5f * delta;
+		if(Mouse.getButtonState(Mouse.BUTTON_LEFT)){
+			Mouse.getDXpos();
+			Mouse.getDYpos();
+			gameFocused = true;
+			Mouse.setCursorMode(Mouse.CURSOR_MODE_DISABLED);
+		}
+		if(GameWindow.isFocused() == false){
+			gameFocused = false;
+			Mouse.setCursorMode(Mouse.CURSOR_MODE_NORMAL);
+		}
+		cube.transformation.angle.x += 25f * delta;
+		cube.transformation.angle.y += 50f * delta;
+		cube.transformation.angle.z += 12.5f * delta;
 		camera.move(delta);
 	}
 	private void render(){
 		Render.clear();
-		Render.render(entity, camera);
-		Render.render(zero, camera);
+		Render.render(cube);
+		Render.render(pointZeroPlane);
 		GameWindow.update();
 	}
 	private void stop(){
 		MONShader.stop();
 		shader.dispose();
-		entity.model.dispose();
+		cube.model.dispose();
 		Mouse.destroy();
 		Keyboard.destroy();
 		GameWindow.destroy();

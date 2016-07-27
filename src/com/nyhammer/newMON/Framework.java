@@ -6,7 +6,7 @@ import org.lwjgl.glfw.GLFWErrorCallback;
 import static org.lwjgl.glfw.GLFW.*;
 
 /**
- * @since Version 0.0.1a
+ * @since Version 0.1.0a
  * 
  * @author McFlyboy
  *

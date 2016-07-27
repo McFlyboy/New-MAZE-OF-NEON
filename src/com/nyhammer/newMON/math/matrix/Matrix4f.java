@@ -5,7 +5,7 @@ import java.nio.FloatBuffer;
 import com.nyhammer.newMON.math.vector.Vector3f;
 
 /**
- * @since Version 0.0.1a
+ * @since Version 0.1.0a
  * 
  * @author McFlyboy
  *
@@ -117,6 +117,7 @@ public class Matrix4f{
 		m32 = 2 * farPlane * nearPlane / frustumLength;
 		m33 = 0;
 	}
+	@Override
 	public String toString(){
 		StringBuilder string = new StringBuilder();
 		string.append(m00 + ", ");

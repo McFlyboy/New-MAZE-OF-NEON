@@ -7,7 +7,7 @@ import org.lwjgl.glfw.GLFWKeyCallback;
 import com.nyhammer.newMON.ui.GameWindow;
 
 /**
- * @since Version 0.0.1a
+ * @since Version 0.1.0a
  * 
  * @author McFlyboy
  *

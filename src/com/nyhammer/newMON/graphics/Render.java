@@ -6,18 +6,23 @@ import static org.lwjgl.opengl.GL20.*;
 import com.nyhammer.newMON.entities.ModelEntity;
 import com.nyhammer.newMON.graphics.shading.shaderPrograms.MONShader;
 import com.nyhammer.newMON.entities.Camera;
+import com.nyhammer.newMON.math.Transformation;
 import com.nyhammer.newMON.math.matrix.Matrix4f;
 import com.nyhammer.newMON.math.matrix.MatrixUtil;
 
 /**
- * @since Version 0.0.1a
+ * @since Version 0.1.0a
  * 
  * @author McFlyboy
  *
  */
 public class Render{
+	private static Camera camera;
 	private static MONShader shader;
 	private static Matrix4f projection;
+	public static void setCamera(Camera camera){
+		Render.camera = camera;
+	}
 	public static void setShader(MONShader shader){
 		Render.shader = shader;
 		shader.start();
@@ -46,12 +51,12 @@ public class Render{
 		}
 		glPolygonMode(GL_FRONT_AND_BACK, mode);
 	}
-	public static void render(ModelEntity entity, Camera camera){
+	public static void render(ModelEntity entity){
 		entity.model.bind();
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);
 		shader.loadProjection(projection);
-		shader.loadView(MatrixUtil.createViewMatrix(camera.transformation));
+		shader.loadView(MatrixUtil.createViewMatrix(new Transformation(camera.viewPosition, camera.transformation.angle, camera.transformation.scale)));
 		shader.loadTransformation(MatrixUtil.createTransformation(entity.transformation));
 		glDrawElements(GL_TRIANGLES, entity.model.getIndexCount(), GL_UNSIGNED_INT, 0L);
 		glDisableVertexAttribArray(0);

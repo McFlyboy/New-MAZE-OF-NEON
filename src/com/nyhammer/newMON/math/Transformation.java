@@ -3,7 +3,7 @@ package com.nyhammer.newMON.math;
 import com.nyhammer.newMON.math.vector.Vector3f;
 
 /**
- * @since Version 0.0.1a
+ * @since Version 0.1.0a
  * 
  * @author McFlyboy
  *

@@ -2,8 +2,8 @@ package com.nyhammer.newMON.graphics.shading;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.FloatBuffer;
 
 import org.lwjgl.BufferUtils;
@@ -17,7 +17,7 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.*;
 
 /**
- * @since Version 0.0.1a
+ * @since Version 0.1.0a
  * 
  * @author McFlyboy
  *
@@ -80,7 +80,7 @@ public abstract class ShaderProgram{
 	private int loadShader(String filename, int type){
 		StringBuilder sourceCode = new StringBuilder();
 		try{
-			BufferedReader reader = new BufferedReader(new FileReader(filename));
+			BufferedReader reader = new BufferedReader(new InputStreamReader(Class.class.getResourceAsStream(filename)));
 			String line;
 			while((line = reader.readLine()) != null){
 				sourceCode.append(line).append("\n");

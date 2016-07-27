@@ -1,7 +1,9 @@
 package com.nyhammer.newMON.math.vector;
 
+import com.nyhammer.newMON.math.quaternion.Quaternion;
+
 /**
- * @since Version 0.0.1a
+ * @since Version 0.1.0a
  * 
  * @author McFlyboy
  *
@@ -86,6 +88,18 @@ public class Vector3f{
 			y /= scalar;
 			z /= scalar;
 		}
+	}
+	public static Vector3f rotate(Vector3f src, Vector3f axis, float angle){
+		float sinHalfAngle = (float)Math.sin(Math.toRadians(angle / 2f));
+		float cosHalfAngle = (float)Math.cos(Math.toRadians(angle / 2f));
+		float rx = axis.x * sinHalfAngle;
+		float ry = axis.y * sinHalfAngle;
+		float rz = axis.z * sinHalfAngle;
+		float rw = cosHalfAngle;
+		Quaternion rotation = new Quaternion(rx, ry, rz, rw);
+		Quaternion conjugate = Quaternion.conjugate(rotation);
+		Quaternion dest = Quaternion.mul(Quaternion.mul(rotation, src), conjugate);
+		return new Vector3f(dest.x, dest.y, dest.z);
 	}
 	public static float dot(Vector3f vec0, Vector3f vec1){
 		return vec0.x * vec1.x + vec0.y * vec1.y + vec0.z * vec1.z;

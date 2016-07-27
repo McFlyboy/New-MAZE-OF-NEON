@@ -6,7 +6,7 @@ import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 
 /**
- * @since Version 0.0.1a
+ * @since Version 0.1.0a
  * 
  * @author McFlyboy
  *

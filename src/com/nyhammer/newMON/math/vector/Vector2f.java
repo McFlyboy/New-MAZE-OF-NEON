@@ -1,7 +1,7 @@
 package com.nyhammer.newMON.math.vector;
 
 /**
- * @since Version 0.0.1a
+ * @since Version 0.1.0a
  * 
  * @author McFlyboy
  *
@@ -92,8 +92,10 @@ public class Vector2f{
 		double rad = Math.toRadians(angle);
 		double cos = Math.cos(rad);
 		double sin = Math.sin(rad);
-		x = (float)(x * cos - y * sin);
-		y = (float)(x * sin + y * cos);
+		float x = (float)(this.x * cos - this.y * sin);
+		float y = (float)(this.x * sin + this.y * cos);
+		this.x = x;
+		this.y = y;
 	}
 	public static float dot(Vector2f vec0, Vector2f vec1){
 		return vec0.x * vec1.x + vec0.y * vec1.y;

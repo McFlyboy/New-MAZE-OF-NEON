@@ -14,7 +14,7 @@ import com.nyhammer.newMON.Main;
 import com.nyhammer.newMON.graphics.Render;
 
 /**
- * @since Version 0.0.1a
+ * @since Version 0.1.0a
  * 
  * @author McFlyboy
  *
@@ -80,7 +80,7 @@ public class GameWindow{
 			@Override
 			public void invoke(long window, int width, int height){
 				glViewport(0, 0, width, height);
-				Render.setProjectionMatrix(width, height, Main.fov, Main.nearPlane, Main.farPlane);
+				Render.setProjectionMatrix(width, height, Main.FOV, Main.NEAR_PLANE, Main.FAR_PLANE);
 			}
 		});
 	}

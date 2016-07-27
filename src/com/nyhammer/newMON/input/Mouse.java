@@ -10,7 +10,7 @@ import org.lwjgl.glfw.GLFWScrollCallback;
 import com.nyhammer.newMON.ui.GameWindow;
 
 /**
- * @since Version 0.0.1a
+ * @since Version 0.1.0a
  * 
  * @author McFlyboy
  *
@@ -32,16 +32,21 @@ public class Mouse{
 		BUTTON_MIDDLE = BUTTON_3;
 	/** Cursor mode. */
 	public static final int
-		CURSOR_NORMAL   = 0x34001,
-		CURSOR_HIDDEN   = 0x34002,
-		CURSOR_DISABLED = 0x34003;
+		CURSOR_MODE_NORMAL   = 0x34001,
+		CURSOR_MODE_HIDDEN   = 0x34002,
+		CURSOR_MODE_DISABLED = 0x34003;
+	/** Miscellaneous */
+	public static final int
+		CURSOR_ENTERED =   0x1,
+		CURSOR_EXITED =    0x2,
+		CURSOR_UNCHANGED = 0x0;
 	private static GLFWMouseButtonCallback buttonCallback;
 	private static GLFWCursorPosCallback positionCallback;
 	private static GLFWCursorEnterCallback enterCallback;
 	private static GLFWScrollCallback scrollCallback;
 	private static boolean[] buttons = new boolean[20];
 	private static int xpos, ypos, lastXPos, lastYPos;
-	private static boolean entered;
+	private static int entered;
 	private static int scrollXOffset, scrollYOffset;
 	public static int getXpos(){
 		return xpos;
@@ -62,8 +67,10 @@ public class Mouse{
 	public static boolean getButtonState(int buttonID){
 		return buttons[buttonID];
 	}
-	public static boolean isEntered(){
-		return entered;
+	public static int isEntered(){
+		int enterState = entered;
+		entered = CURSOR_UNCHANGED;
+		return enterState;
 	}
 	public static int getScrollXOffset(){
 		int xoffset = scrollXOffset;
@@ -92,7 +99,11 @@ public class Mouse{
 		glfwSetCursorEnterCallback(GameWindow.getWindowID(), enterCallback = new GLFWCursorEnterCallback(){
 			@Override
 			public void invoke(long window, boolean entered){
-				Mouse.entered = entered;
+				int iEntered = CURSOR_EXITED;
+				if(entered){
+					iEntered = CURSOR_ENTERED;
+				}
+				Mouse.entered = iEntered;
 				Mouse.lastXPos = xpos;
 				Mouse.lastYPos = ypos;
 			}

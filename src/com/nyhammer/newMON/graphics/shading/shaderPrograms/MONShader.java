@@ -4,13 +4,13 @@ import com.nyhammer.newMON.graphics.shading.ShaderProgram;
 import com.nyhammer.newMON.math.matrix.Matrix4f;
 
 /**
- * @since Version 0.0.1a
+ * @since Version 0.1.0a
  * 
  * @author McFlyboy
  *
  */
 public class MONShader extends ShaderProgram{
-	private static final String shaderLocation = "res/shaders/";
+	private static final String shaderLocation = "/shaders/";
 	private static final String vertexShaderFilename = shaderLocation + "MONVertexShader.vsh";
 	private static final String fragmentShaderFilename = shaderLocation + "MONFragmentShader.fsh";
 	private int transformationLocation;

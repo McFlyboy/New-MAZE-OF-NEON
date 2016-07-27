@@ -4,7 +4,7 @@ import com.nyhammer.newMON.graphics.Model;
 import com.nyhammer.newMON.math.Transformation;
 
 /**
- * @since Version 0.0.1a
+ * @since Version 0.1.0a
  * 
  * @author McFlyboy
  *
