@@ -9,9 +9,9 @@ The game itself is pretty boring, and also ugly to look at, as I stopped working
 ![Screenshot from the game](https://raw.githubusercontent.com/McFlyboy/New-MAZE-OF-NEON/master/The-old-game/MAZE%20OF%20NEON.png)
 <br />
 <br />
-The original game only had two textures. One for the walls, and one for the floor and ceiling.
+The original game had only two textures. One for the walls, and one for the floor and ceiling.
 <br />
-The game also had a *minimap* (displayed at the bottom-right corner) which reveals which paths you have already taken.
+The game also had a *minimap* (displayed at the bottom-right corner) which reveals all paths you have already taken.
 <br />
 <br />
 ## "Editor"!
