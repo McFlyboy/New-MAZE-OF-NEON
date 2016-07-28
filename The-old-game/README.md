@@ -11,7 +11,7 @@ The game itself is pretty boring, and also ugly to look at, as I stopped working
 <br />
 The original game had only two textures. One for the walls, and one for the floor and ceiling.
 <br />
-The game also had a *minimap* (displayed at the bottom-right corner) which reveals all paths you have already taken.
+The game also had a *minimap* (displayed at the **bottom-right corner**) which reveals all paths you have already taken.
 <br />
 <br />
 ## "Editor"!
