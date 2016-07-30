@@ -131,7 +131,7 @@ public class ResourceLoader{
 	private static void processVertex(String[] vertexData, List<Integer> faces, List<Vector3f> colors, List<Vector3f> normals, float[] colorArray, float[] normalArray){
 		int currentVertexPointer = Integer.parseInt(vertexData[0]) - 1;
 		faces.add(currentVertexPointer);
-		Vector3f currentColor = colors.get(random.nextInt(8));
+		Vector3f currentColor = colors.get(random.nextInt(colors.size()));
 		colorArray[currentVertexPointer * 3] = currentColor.x;
 		colorArray[currentVertexPointer * 3 + 1] = currentColor.y;
 		colorArray[currentVertexPointer * 3 + 2] = currentColor.z;
