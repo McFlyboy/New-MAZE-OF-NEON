@@ -1,9 +1,5 @@
 package com.nyhammer.newMON.graphics.shading;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.FloatBuffer;
 
 import org.lwjgl.BufferUtils;
@@ -12,6 +8,7 @@ import com.nyhammer.newMON.math.matrix.Matrix4f;
 import com.nyhammer.newMON.math.vector.Vector2f;
 import com.nyhammer.newMON.math.vector.Vector3f;
 import com.nyhammer.newMON.ui.GameWindow;
+import com.nyhammer.newMON.util.ResourceLoader;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.*;
@@ -77,31 +74,13 @@ public abstract class ShaderProgram{
 	protected void bindAttrib(int index, String name){
 		glBindAttribLocation(programID, index, name);
 	}
-	private int loadShader(String filename, int type){
-		StringBuilder sourceCode = new StringBuilder();
-		try{
-			BufferedReader reader = new BufferedReader(new InputStreamReader(Class.class.getResourceAsStream(filename)));
-			String line;
-			while((line = reader.readLine()) != null){
-				sourceCode.append(line).append("\n");
-			}
-			reader.close();
-		}
-		catch(FileNotFoundException e){
-			System.err.println("Could not locate the file: " + filename);
-			e.printStackTrace();
-			GameWindow.close();
-		}
-		catch(IOException e){
-			System.err.println("Could not read the file: " + filename);
-			e.printStackTrace();
-			GameWindow.close();
-		}
+	private int loadShader(String filepath, int type){
+		StringBuilder sourceCode = ResourceLoader.loadShaderCode(filepath);
 		int shaderID = glCreateShader(type);
 		glShaderSource(shaderID, sourceCode);
 		glCompileShader(shaderID);
 		if(glGetShaderi(shaderID, GL_COMPILE_STATUS) != GL_TRUE){
-			System.err.println("Error in shader-file: " + filename);
+			System.err.println("Error in shader-file: " + filepath);
 			System.err.println(glGetShaderInfoLog(shaderID, 500));
 			GameWindow.close();
 		}

@@ -34,6 +34,15 @@ public class Camera extends Entity{
 			if(Keyboard.getKeyState(Keyboard.KEY_D)){
 				deltaPosition.x++;
 			}
+			if(Keyboard.getKeyState(Keyboard.KEY_Q)){
+				deltaPosition.y--;
+			}
+			if(Keyboard.getKeyState(Keyboard.KEY_E)){
+				deltaPosition.y++;
+			}
+			if(Keyboard.getKeyState(Keyboard.KEY_R)){
+				transformation.position.y = 0.5f;
+			}
 			deltaAngle.y = Mouse.getDXpos();
 			deltaAngle.x = Mouse.getDYpos();
 		}
