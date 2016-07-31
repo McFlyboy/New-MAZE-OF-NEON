@@ -26,6 +26,7 @@ public class Main{
 	private MONShader shader;
 	private Camera camera;
 	private ModelEntity testLevel;
+	private ModelEntity finish;
 	public static final float FOV = 70f;
 	public static final float NEAR_PLANE = 0.1f;
 	public static final float FAR_PLANE = 1000f;
@@ -51,8 +52,15 @@ public class Main{
 			Mouse.create();
 			Timer.init();
 			testLevel = new ModelEntity(ResourceLoader.loadOBJModel("levels/Test-maze.obj"));
+			finish = new ModelEntity(ResourceLoader.loadOBJModel("Finish-F.obj"));
+			finish.transformation.position.x = 6.5f;
+			finish.transformation.position.y = 0.35f;
+			finish.transformation.position.z = 6.5f;
+			finish.transformation.scale.mul(0.5f);
 			camera = new Camera();
+			camera.transformation.position.x = 6.5f;
 			camera.transformation.position.y = 0.5f;
+			camera.transformation.position.z = -6.5f;
 			Render.setCamera(camera);
 			shader = new MONShader();
 			Render.setShader(shader);
@@ -82,6 +90,9 @@ public class Main{
 		if(Keyboard.getKeyState(Keyboard.KEY_ESCAPE)){
 			GameWindow.close();
 		}
+		if(Keyboard.getKeyState(Keyboard.KEY_F)){
+			Render.setWireframe(true);
+		}
 		if(Mouse.getButtonState(Mouse.BUTTON_LEFT) && !gameFocused){
 			Mouse.getDXpos();
 			Mouse.getDYpos();
@@ -92,17 +103,21 @@ public class Main{
 			gameFocused = false;
 			Mouse.setCursorMode(Mouse.CURSOR_MODE_NORMAL);
 		}
+		finish.transformation.angle.y += 50f * delta;
+		finish.transformation.position.y += (float)(Math.sin(Timer.getTime()) * delta / 8.0);
 		camera.move(delta);
 	}
 	private void render(){
 		Render.clear();
 		Render.render(testLevel);
+		Render.render(finish);
 		GameWindow.update();
 	}
 	private void stop(){
 		MONShader.stop();
 		shader.dispose();
 		testLevel.model.dispose();
+		finish.model.dispose();
 		Mouse.destroy();
 		Keyboard.destroy();
 		GameWindow.destroy();
