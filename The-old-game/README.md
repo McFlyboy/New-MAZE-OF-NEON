@@ -3,7 +3,7 @@ This is the original version of the game which i stopped working on in **2014**.
 <br />
 The game itself is pretty boring, and also ugly to look at, as I stopped working on it in an early state of development.
 <br />
-(After all, the game was called version ***BETA 0.0.4*** for a reason.)
+(After all, the game was called version ***BETA 0.0.4*** for a reason). [Click here](https://github.com/McFlyboy/New-MAZE-OF-NEON/raw/master/The-old-game/MAZE%20OF%20NEON%20-%20BETA%200.0.4.jar) to download the game!
 <br />
 ## Screenshot:
 ![Screenshot from the game](https://raw.githubusercontent.com/McFlyboy/New-MAZE-OF-NEON/master/The-old-game/MAZE%20OF%20NEON.png)
