@@ -45,7 +45,7 @@ public class Main{
 		try{
 			Framework.init();
 			GameWindow.create(800, 600, TITLE, false);
-			GameWindow.setVSync(true);
+			GameWindow.setVSync(false);
 			Render.setClearColor(0f, 0.3f, 0.6f, 1f);
 			Render.enableDepthTest(true);
 			Keyboard.create();
@@ -75,10 +75,30 @@ public class Main{
 		}
 	}
 	private void run(){
+		final double targetFrameTime = 1.0 / GameWindow.getMonitorRefreshRate();
+		double unprocessedTime = 0;
 		while(!GameWindow.windowShouldClose()){
-			update(Timer.getDelta());
-			render();
-			Timer.updateFPS();
+			boolean renderReady = false;
+			float delta = Timer.getDelta();
+			if(unprocessedTime >= 0){
+				renderReady = true;
+				unprocessedTime -= targetFrameTime;
+			}
+			unprocessedTime += delta;
+			update(delta);
+			if(renderReady){
+				render();
+				Timer.updateFPS();
+			}
+			else{
+				try{
+					Thread.sleep(1);
+				}
+				catch(InterruptedException e){
+					e.printStackTrace();
+					GameWindow.close();
+				}
+			}
 		}
 		stop();
 	}

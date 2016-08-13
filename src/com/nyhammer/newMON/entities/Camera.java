@@ -13,7 +13,7 @@ import com.nyhammer.newMON.math.vector.Vector3f;
  */
 public class Camera extends Entity{
 	private float walkSpeed = 3f;
-	private float rotationSpeed = 7.5f;
+	private float rotationSpeed = 1f / 16f;
 	public Vector3f viewPosition = new Vector3f();
 	public Camera(){
 		super();
@@ -46,7 +46,7 @@ public class Camera extends Entity{
 			deltaAngle.y = Mouse.getDXpos();
 			deltaAngle.x = Mouse.getDYpos();
 		}
-		deltaAngle.mul(rotationSpeed * delta);
+		deltaAngle.mul(rotationSpeed);
 		transformation.angle.add(deltaAngle);
 		if(transformation.angle.x < -90){
 			transformation.angle.x = -90;

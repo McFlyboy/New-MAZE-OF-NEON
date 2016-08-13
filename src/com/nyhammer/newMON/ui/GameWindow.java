@@ -21,6 +21,7 @@ import com.nyhammer.newMON.graphics.Render;
  */
 public class GameWindow{
 	private static long windowID;
+	private static GLFWVidMode vidmode;
 	private static GLFWWindowSizeCallback sizeCallback;
 	private static GLFWFramebufferSizeCallback frameBufferSizeCallback;
 	private static GLFWWindowFocusCallback focusCallback;
@@ -52,6 +53,13 @@ public class GameWindow{
 		long monitor = NULL;
 		if(fullscreen){
 			monitor = glfwGetPrimaryMonitor();
+			vidmode = glfwGetVideoMode(monitor);
+			width = getMonitorWidth();
+			height = getMonitorHeight();
+			focused = true;
+		}
+		else{
+			vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 		}
 		windowID = glfwCreateWindow(width, height, title, monitor, NULL);
 		if(windowID == NULL){
@@ -84,9 +92,17 @@ public class GameWindow{
 			}
 		});
 	}
+	public static int getMonitorWidth(){
+		return vidmode.width();
+	}
+	public static int getMonitorHeight(){
+		return vidmode.height();
+	}
+	public static int getMonitorRefreshRate(){
+		return vidmode.refreshRate();
+	}
 	public static void center(){
-		GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-		glfwSetWindowPos(windowID, (vidmode.width() - width) / 2, (vidmode.height() - height) / 2);
+		glfwSetWindowPos(windowID, (getMonitorWidth() - width) / 2, (getMonitorHeight() - height) / 2);
 	}
 	public static void setSize(int width, int height){
 		glfwSetWindowSize(windowID, width, height);
