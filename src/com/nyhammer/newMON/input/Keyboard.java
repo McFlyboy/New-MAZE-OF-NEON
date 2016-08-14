@@ -139,22 +139,35 @@ public class Keyboard{
 		KEY_RIGHT_SUPER   = 347,
 		KEY_MENU          = 348,
 		KEY_LAST          = KEY_MENU;
+	
+	/** Key-states. */
+	public static final int
+		KEY_PRESSED         = 1,
+		KEY_RELEASED         = 2,
+		KEY_UNCHANGED         = 0;
 	private static GLFWKeyCallback keyCallback;
-	private static boolean[] keys = new boolean[68836];
-	public static boolean getKeyState(int keyID){
-		return keys[keyID];
+	private static int[] keys = new int[68836];
+	public static int getKeyState(int keyID){
+		int keyState = keys[keyID];
+		keys[keyID] = KEY_UNCHANGED;
+		return keyState;
 	}
 	public static void create(){
 		glfwSetKeyCallback(GameWindow.getWindowID(), keyCallback = new GLFWKeyCallback(){
 			@Override
 			public void invoke(long window, int key, int scancode, int action, int mods){
-				keys[key] = action != GLFW_RELEASE;
+				if(action == GLFW_PRESS){
+					keys[key] = KEY_PRESSED;
+				}
+				if(action == GLFW_RELEASE){
+					keys[key] = KEY_RELEASED;
+				}
 			}
 		});
 	}
 	public static void reset(){
 		for(int i = 0; i < keys.length; i++){
-			keys[i] = false;
+			keys[i] = KEY_UNCHANGED;
 		}
 	}
 	public static void destroy(){

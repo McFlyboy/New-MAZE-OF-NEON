@@ -15,6 +15,7 @@ public class Camera extends Entity{
 	private float walkSpeed = 3f;
 	private float rotationSpeed = 1f / 16f;
 	public Vector3f viewPosition = new Vector3f();
+	private boolean[] WSADQE = new boolean[6];
 	public Camera(){
 		super();
 	}
@@ -22,25 +23,67 @@ public class Camera extends Entity{
 		Vector3f deltaPosition = new Vector3f();
 		Vector3f deltaAngle = new Vector3f();
 		if(Main.gameFocused){
-			if(Keyboard.getKeyState(Keyboard.KEY_W)){
+			int keyState = Keyboard.getKeyState(Keyboard.KEY_W);
+			if(keyState == Keyboard.KEY_PRESSED){
+				WSADQE[0] = true;
+			}
+			if(keyState == Keyboard.KEY_RELEASED){
+				WSADQE[0] = false;
+			}
+			keyState = Keyboard.getKeyState(Keyboard.KEY_S);
+			if(keyState == Keyboard.KEY_PRESSED){
+				WSADQE[1] = true;
+			}
+			if(keyState == Keyboard.KEY_RELEASED){
+				WSADQE[1] = false;
+			}
+			keyState = Keyboard.getKeyState(Keyboard.KEY_A);
+			if(keyState == Keyboard.KEY_PRESSED){
+				WSADQE[2] = true;
+			}
+			if(keyState == Keyboard.KEY_RELEASED){
+				WSADQE[2] = false;
+			}
+			keyState = Keyboard.getKeyState(Keyboard.KEY_D);
+			if(keyState == Keyboard.KEY_PRESSED){
+				WSADQE[3] = true;
+			}
+			if(keyState == Keyboard.KEY_RELEASED){
+				WSADQE[3] = false;
+			}
+			keyState = Keyboard.getKeyState(Keyboard.KEY_Q);
+			if(keyState == Keyboard.KEY_PRESSED){
+				WSADQE[4] = true;
+			}
+			if(keyState == Keyboard.KEY_RELEASED){
+				WSADQE[4] = false;
+			}
+			keyState = Keyboard.getKeyState(Keyboard.KEY_E);
+			if(keyState == Keyboard.KEY_PRESSED){
+				WSADQE[5] = true;
+			}
+			if(keyState == Keyboard.KEY_RELEASED){
+				WSADQE[5] = false;
+			}
+			if(WSADQE[0]){
 				deltaPosition.z++;
 			}
-			if(Keyboard.getKeyState(Keyboard.KEY_S)){
+			if(WSADQE[1]){
 				deltaPosition.z--;
 			}
-			if(Keyboard.getKeyState(Keyboard.KEY_A)){
+			if(WSADQE[2]){
 				deltaPosition.x--;
 			}
-			if(Keyboard.getKeyState(Keyboard.KEY_D)){
+			if(WSADQE[3]){
 				deltaPosition.x++;
 			}
-			if(Keyboard.getKeyState(Keyboard.KEY_Q)){
+			if(WSADQE[4]){
 				deltaPosition.y--;
 			}
-			if(Keyboard.getKeyState(Keyboard.KEY_E)){
+			if(WSADQE[5]){
 				deltaPosition.y++;
 			}
-			if(Keyboard.getKeyState(Keyboard.KEY_R)){
+			if(Keyboard.getKeyState(Keyboard.KEY_R) == Keyboard.KEY_PRESSED){
 				transformation.position.y = 0.5f;
 			}
 			deltaAngle.y = Mouse.getDXpos();

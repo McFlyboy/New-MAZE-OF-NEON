@@ -20,6 +20,10 @@ public class Render{
 	private static Camera camera;
 	private static MONShader shader;
 	private static Matrix4f projection;
+	private static boolean wireframe;
+	public static boolean isWireframe(){
+		return wireframe;
+	}
 	public static void setCamera(Camera camera){
 		Render.camera = camera;
 	}
@@ -45,6 +49,7 @@ public class Render{
 		}
 	}
 	public static void setWireframe(boolean wireframe){
+		Render.wireframe = wireframe;
 		int mode = GL_FILL;
 		if(wireframe){
 			mode = GL_LINE;

@@ -107,11 +107,24 @@ public class Main{
 			Controller.updateButtonState();
 			Controller.updateAxisStates();
 		}
-		if(Keyboard.getKeyState(Keyboard.KEY_ESCAPE)){
+		if(Keyboard.getKeyState(Keyboard.KEY_ESCAPE) == Keyboard.KEY_PRESSED){
 			GameWindow.close();
 		}
-		if(Keyboard.getKeyState(Keyboard.KEY_F)){
-			Render.setWireframe(true);
+		if(Keyboard.getKeyState(Keyboard.KEY_F11) == Keyboard.KEY_PRESSED){
+			if(!GameWindow.isFullscreen()){
+				GameWindow.setFullscreen(true);
+			}
+			else{
+				GameWindow.setFullscreen(false);
+			}
+		}
+		if(Keyboard.getKeyState(Keyboard.KEY_F) == Keyboard.KEY_PRESSED){
+			if(!Render.isWireframe()){
+				Render.setWireframe(true);
+			}
+			else{
+				Render.setWireframe(false);
+			}
 		}
 		if(Mouse.getButtonState(Mouse.BUTTON_LEFT) && !gameFocused){
 			Mouse.getDXpos();
