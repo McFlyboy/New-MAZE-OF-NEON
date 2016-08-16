@@ -142,21 +142,28 @@ public class Keyboard{
 	
 	/** Button-states. */
 	public static final int
-		KEY_PRESSED                      = 1,
+		KEY_PRESSED                      = 3,
 		KEY_RELEASED                     = 2,
-		KEY_UNCHANGED_FROM_PRESS         = -1,
+		KEY_UNCHANGED_FROM_PRESS         = 1,
 		KEY_UNCHANGED_FROM_RELEASE       = 0;
+	/** Miscellaneous */
+	public static final int
+		KEY_UNCHANGE_RANGE = 2;
 	private static GLFWKeyCallback keyCallback;
 	private static int[] keys = new int[68836];
-	public static int getKeyState(int keyID){
+	private static int getKeyState(int keyID){
 		int keyState = keys[keyID];
-		if(keyState == KEY_PRESSED){
-			keys[keyID] = KEY_UNCHANGED_FROM_PRESS;
-		}
-		if(keyState == KEY_RELEASED){
-			keys[keyID] = KEY_UNCHANGED_FROM_RELEASE;
+		if(keyState >= KEY_UNCHANGE_RANGE){
+			keys[keyID] -= KEY_UNCHANGE_RANGE;
 		}
 		return keyState;
+	}
+	public static boolean isKeyPressed(int keyID){
+		return getKeyState(keyID) == KEY_PRESSED;
+	}
+	public static boolean isKeyDown(int keyID){
+		int keyState = getKeyState(keyID);
+		return keyState == KEY_PRESSED | keyState == KEY_UNCHANGED_FROM_PRESS;
 	}
 	public static void create(){
 		glfwSetKeyCallback(GameWindow.getWindowID(), keyCallback = new GLFWKeyCallback(){

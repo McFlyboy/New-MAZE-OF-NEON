@@ -22,31 +22,25 @@ public class Camera extends Entity{
 		Vector3f deltaPosition = new Vector3f();
 		Vector3f deltaAngle = new Vector3f();
 		if(Main.gameFocused){
-			int keyState = Keyboard.getKeyState(Keyboard.KEY_W);
-			if(keyState == Keyboard.KEY_PRESSED || keyState == Keyboard.KEY_UNCHANGED_FROM_PRESS){
+			if(Keyboard.isKeyDown(Keyboard.KEY_W)){
 				deltaPosition.z++;
 			}
-			keyState = Keyboard.getKeyState(Keyboard.KEY_S);
-			if(keyState == Keyboard.KEY_PRESSED || keyState == Keyboard.KEY_UNCHANGED_FROM_PRESS){
+			if(Keyboard.isKeyDown(Keyboard.KEY_S)){
 				deltaPosition.z--;
 			}
-			keyState = Keyboard.getKeyState(Keyboard.KEY_A);
-			if(keyState == Keyboard.KEY_PRESSED || keyState == Keyboard.KEY_UNCHANGED_FROM_PRESS){
+			if(Keyboard.isKeyDown(Keyboard.KEY_A)){
 				deltaPosition.x--;
 			}
-			keyState = Keyboard.getKeyState(Keyboard.KEY_D);
-			if(keyState == Keyboard.KEY_PRESSED || keyState == Keyboard.KEY_UNCHANGED_FROM_PRESS){
+			if(Keyboard.isKeyDown(Keyboard.KEY_D)){
 				deltaPosition.x++;
 			}
-			keyState = Keyboard.getKeyState(Keyboard.KEY_Q);
-			if(keyState == Keyboard.KEY_PRESSED || keyState == Keyboard.KEY_UNCHANGED_FROM_PRESS){
+			if(Keyboard.isKeyDown(Keyboard.KEY_Q)){
 				deltaPosition.y--;
 			}
-			keyState = Keyboard.getKeyState(Keyboard.KEY_E);
-			if(keyState == Keyboard.KEY_PRESSED || keyState == Keyboard.KEY_UNCHANGED_FROM_PRESS){
+			if(Keyboard.isKeyDown(Keyboard.KEY_E)){
 				deltaPosition.y++;
 			}
-			if(Keyboard.getKeyState(Keyboard.KEY_R) == Keyboard.KEY_PRESSED){
+			if(Keyboard.isKeyPressed(Keyboard.KEY_R)){
 				transformation.position.y = 0.5f;
 			}
 			deltaAngle.y = Mouse.getDXpos();

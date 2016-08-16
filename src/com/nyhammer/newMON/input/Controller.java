@@ -38,9 +38,9 @@ public class Controller{
 		AXIS_RT = 5;
 	/** Button-states. */
 	public static final int
-		BUTTON_PRESSED                      = 1,
+		BUTTON_PRESSED                      = 3,
 		BUTTON_RELEASED                     = 2,
-		BUTTON_UNCHANGED_FROM_PRESS         = -1,
+		BUTTON_UNCHANGED_FROM_PRESS         = 1,
 		BUTTON_UNCHANGED_FROM_RELEASE       = 0;
 	private static int[] buttons = new int[14];
 	private static float[] axes = new float[6];

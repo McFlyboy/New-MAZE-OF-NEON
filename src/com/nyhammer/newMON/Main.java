@@ -107,10 +107,10 @@ public class Main{
 			Controller.updateButtonState();
 			Controller.updateAxisStates();
 		}
-		if(Keyboard.getKeyState(Keyboard.KEY_ESCAPE) == Keyboard.KEY_PRESSED){
+		if(Keyboard.isKeyPressed(Keyboard.KEY_ESCAPE)){
 			GameWindow.close();
 		}
-		if(Keyboard.getKeyState(Keyboard.KEY_F11) == Keyboard.KEY_PRESSED){
+		if(Keyboard.isKeyPressed(Keyboard.KEY_F11)){
 			if(!GameWindow.isFullscreen()){
 				GameWindow.setFullscreen(true);
 			}
@@ -118,7 +118,7 @@ public class Main{
 				GameWindow.setFullscreen(false);
 			}
 		}
-		if(Keyboard.getKeyState(Keyboard.KEY_V) == Keyboard.KEY_PRESSED){
+		if(Keyboard.isKeyPressed(Keyboard.KEY_V)){
 			if(!GameWindow.isVSync()){
 				GameWindow.setVSync(true);
 			}
@@ -126,7 +126,7 @@ public class Main{
 				GameWindow.setVSync(false);
 			}
 		}
-		if(Keyboard.getKeyState(Keyboard.KEY_F) == Keyboard.KEY_PRESSED){
+		if(Keyboard.isKeyPressed(Keyboard.KEY_F)){
 			if(!Render.isWireframe()){
 				Render.setWireframe(true);
 			}
@@ -134,7 +134,7 @@ public class Main{
 				Render.setWireframe(false);
 			}
 		}
-		if(Mouse.getButtonState(Mouse.BUTTON_LEFT) == Mouse.BUTTON_PRESSED && !gameFocused){
+		if(Mouse.isButtonPressed(Mouse.BUTTON_LEFT) && !gameFocused){
 			Mouse.getDXpos();
 			Mouse.getDYpos();
 			gameFocused = true;

@@ -35,17 +35,18 @@ public class Mouse{
 		CURSOR_MODE_NORMAL   = 0x34001,
 		CURSOR_MODE_HIDDEN   = 0x34002,
 		CURSOR_MODE_DISABLED = 0x34003;
-	/** Miscellaneous */
-	public static final int
-		CURSOR_ENTERED   = 0x1,
-		CURSOR_EXITED    = 0x2,
-		CURSOR_UNCHANGED = 0x0;
 	/** Button-states. */
 	public static final int
-		BUTTON_PRESSED                      = 1,
+		BUTTON_PRESSED                      = 3,
 		BUTTON_RELEASED                     = 2,
-		BUTTON_UNCHANGED_FROM_PRESS         = -1,
+		BUTTON_UNCHANGED_FROM_PRESS         = 1,
 		BUTTON_UNCHANGED_FROM_RELEASE       = 0;
+	/** Miscellaneous */
+	public static final int
+		CURSOR_ENTERED        = 1,
+		CURSOR_EXITED         = 2,
+		CURSOR_UNCHANGED      = 0,
+		BUTTON_UNCHANGE_RANGE = 2;
 	private static GLFWMouseButtonCallback buttonCallback;
 	private static GLFWCursorPosCallback positionCallback;
 	private static GLFWCursorEnterCallback enterCallback;
@@ -70,15 +71,19 @@ public class Mouse{
 		lastYPos = ypos;
 		return dypos;
 	}
-	public static int getButtonState(int buttonID){
+	private static int getButtonState(int buttonID){
 		int buttonState = buttons[buttonID];
-		if(buttonState == BUTTON_PRESSED){
-			buttons[buttonID] = BUTTON_UNCHANGED_FROM_PRESS;
-		}
-		if(buttonState == BUTTON_RELEASED){
-			buttons[buttonID] = BUTTON_UNCHANGED_FROM_RELEASE;
+		if(buttonState >= BUTTON_UNCHANGE_RANGE){
+			buttons[buttonID] -= BUTTON_UNCHANGE_RANGE;
 		}
 		return buttonState;
+	}
+	public static boolean isButtonPressed(int buttonID){
+		return getButtonState(buttonID) == BUTTON_PRESSED;
+	}
+	public static boolean isButtonDown(int buttonID){
+		int buttonState = getButtonState(buttonID);
+		return buttonState == BUTTON_PRESSED | buttonState == BUTTON_UNCHANGED_FROM_PRESS;
 	}
 	public static int isEntered(){
 		int enterState = entered;
