@@ -140,16 +140,22 @@ public class Keyboard{
 		KEY_MENU          = 348,
 		KEY_LAST          = KEY_MENU;
 	
-	/** Key-states. */
+	/** Button-states. */
 	public static final int
-		KEY_PRESSED         = 1,
-		KEY_RELEASED         = 2,
-		KEY_UNCHANGED         = 0;
+		KEY_PRESSED                      = 1,
+		KEY_RELEASED                     = 2,
+		KEY_UNCHANGED_FROM_PRESS         = -1,
+		KEY_UNCHANGED_FROM_RELEASE       = 0;
 	private static GLFWKeyCallback keyCallback;
 	private static int[] keys = new int[68836];
 	public static int getKeyState(int keyID){
 		int keyState = keys[keyID];
-		keys[keyID] = KEY_UNCHANGED;
+		if(keyState == KEY_PRESSED){
+			keys[keyID] = KEY_UNCHANGED_FROM_PRESS;
+		}
+		if(keyState == KEY_RELEASED){
+			keys[keyID] = KEY_UNCHANGED_FROM_RELEASE;
+		}
 		return keyState;
 	}
 	public static void create(){
@@ -167,7 +173,7 @@ public class Keyboard{
 	}
 	public static void reset(){
 		for(int i = 0; i < keys.length; i++){
-			keys[i] = KEY_UNCHANGED;
+			keys[i] = KEY_UNCHANGED_FROM_RELEASE;
 		}
 	}
 	public static void destroy(){

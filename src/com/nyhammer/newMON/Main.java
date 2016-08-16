@@ -84,8 +84,8 @@ public class Main{
 				renderReady = true;
 				unprocessedTime -= targetFrameTime;
 			}
-			unprocessedTime += delta;
 			update(delta);
+			unprocessedTime += delta;
 			if(renderReady){
 				render();
 				Timer.updateFPS();
@@ -118,6 +118,14 @@ public class Main{
 				GameWindow.setFullscreen(false);
 			}
 		}
+		if(Keyboard.getKeyState(Keyboard.KEY_V) == Keyboard.KEY_PRESSED){
+			if(!GameWindow.isVSync()){
+				GameWindow.setVSync(true);
+			}
+			else{
+				GameWindow.setVSync(false);
+			}
+		}
 		if(Keyboard.getKeyState(Keyboard.KEY_F) == Keyboard.KEY_PRESSED){
 			if(!Render.isWireframe()){
 				Render.setWireframe(true);
@@ -126,7 +134,7 @@ public class Main{
 				Render.setWireframe(false);
 			}
 		}
-		if(Mouse.getButtonState(Mouse.BUTTON_LEFT) && !gameFocused){
+		if(Mouse.getButtonState(Mouse.BUTTON_LEFT) == Mouse.BUTTON_PRESSED && !gameFocused){
 			Mouse.getDXpos();
 			Mouse.getDYpos();
 			gameFocused = true;

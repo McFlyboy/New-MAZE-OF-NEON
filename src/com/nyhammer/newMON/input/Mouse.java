@@ -37,14 +37,20 @@ public class Mouse{
 		CURSOR_MODE_DISABLED = 0x34003;
 	/** Miscellaneous */
 	public static final int
-		CURSOR_ENTERED =   0x1,
-		CURSOR_EXITED =    0x2,
+		CURSOR_ENTERED   = 0x1,
+		CURSOR_EXITED    = 0x2,
 		CURSOR_UNCHANGED = 0x0;
+	/** Button-states. */
+	public static final int
+		BUTTON_PRESSED                      = 1,
+		BUTTON_RELEASED                     = 2,
+		BUTTON_UNCHANGED_FROM_PRESS         = -1,
+		BUTTON_UNCHANGED_FROM_RELEASE       = 0;
 	private static GLFWMouseButtonCallback buttonCallback;
 	private static GLFWCursorPosCallback positionCallback;
 	private static GLFWCursorEnterCallback enterCallback;
 	private static GLFWScrollCallback scrollCallback;
-	private static boolean[] buttons = new boolean[20];
+	private static int[] buttons = new int[20];
 	private static int xpos, ypos, lastXPos, lastYPos;
 	private static int entered;
 	private static int scrollXOffset, scrollYOffset;
@@ -64,8 +70,15 @@ public class Mouse{
 		lastYPos = ypos;
 		return dypos;
 	}
-	public static boolean getButtonState(int buttonID){
-		return buttons[buttonID];
+	public static int getButtonState(int buttonID){
+		int buttonState = buttons[buttonID];
+		if(buttonState == BUTTON_PRESSED){
+			buttons[buttonID] = BUTTON_UNCHANGED_FROM_PRESS;
+		}
+		if(buttonState == BUTTON_RELEASED){
+			buttons[buttonID] = BUTTON_UNCHANGED_FROM_RELEASE;
+		}
+		return buttonState;
 	}
 	public static int isEntered(){
 		int enterState = entered;
@@ -86,7 +99,12 @@ public class Mouse{
 		glfwSetMouseButtonCallback(GameWindow.getWindowID(), buttonCallback = new GLFWMouseButtonCallback(){
 			@Override
 			public void invoke(long window, int button, int action, int mods){
-				buttons[button] = action != GLFW_RELEASE;
+				if(action == GLFW_PRESS){
+					buttons[button] = BUTTON_PRESSED;
+				}
+				if(action == GLFW_RELEASE){
+					buttons[button] = BUTTON_RELEASED;
+				}
 			}
 		});
 		glfwSetCursorPosCallback(GameWindow.getWindowID(), positionCallback = new GLFWCursorPosCallback(){
@@ -118,7 +136,7 @@ public class Mouse{
 	}
 	public static void reset(){
 		for(int i = 0; i < buttons.length; i++){
-			buttons[i] = false;
+			buttons[i] = BUTTON_UNCHANGED_FROM_RELEASE;
 		}
 	}
 	public static void setCursorMode(int cursorMode){

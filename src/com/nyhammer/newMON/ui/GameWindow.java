@@ -30,6 +30,7 @@ public class GameWindow{
 	private static int windowedWidth, windowedHeight;
 	private static boolean focused;
 	private static boolean fullscreen;
+	private static boolean vsync;
 	public static long getWindowID(){
 		return windowID;
 	}
@@ -47,6 +48,9 @@ public class GameWindow{
 	}
 	public static boolean isFocused(){
 		return focused;
+	}
+	public static boolean isVSync(){
+		return vsync;
 	}
 	public static int getMonitorWidth(){
 		return vidmode.width();
@@ -79,6 +83,7 @@ public class GameWindow{
 		}
 	}
 	public static void setVSync(boolean vsync){
+		GameWindow.vsync = vsync;
 		int interval = 0;
 		if(vsync){
 			interval = 1;
