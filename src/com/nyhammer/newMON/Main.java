@@ -107,10 +107,10 @@ public class Main{
 			Controller.updateButtonState();
 			Controller.updateAxisStates();
 		}
-		if(Keyboard.isKeyPressed(Keyboard.KEY_ESCAPE)){
+		if(Keyboard.isKeyPressed(Keyboard.KEY_ESCAPE) | Controller.isButtonPressed(Controller.BUTTON_START)){
 			GameWindow.close();
 		}
-		if(Keyboard.isKeyPressed(Keyboard.KEY_F11)){
+		if(Keyboard.isKeyPressed(Keyboard.KEY_F11) | Controller.isButtonPressed(Controller.BUTTON_BACK)){
 			if(!GameWindow.isFullscreen()){
 				GameWindow.setFullscreen(true);
 			}
@@ -118,7 +118,7 @@ public class Main{
 				GameWindow.setFullscreen(false);
 			}
 		}
-		if(Keyboard.isKeyPressed(Keyboard.KEY_V)){
+		if(Keyboard.isKeyPressed(Keyboard.KEY_V) | Controller.isButtonPressed(Controller.BUTTON_RB)){
 			if(!GameWindow.isVSync()){
 				GameWindow.setVSync(true);
 			}
@@ -126,7 +126,7 @@ public class Main{
 				GameWindow.setVSync(false);
 			}
 		}
-		if(Keyboard.isKeyPressed(Keyboard.KEY_F)){
+		if(Keyboard.isKeyPressed(Keyboard.KEY_F) | Controller.isButtonPressed(Controller.BUTTON_LB)){
 			if(!Render.isWireframe()){
 				Render.setWireframe(true);
 			}

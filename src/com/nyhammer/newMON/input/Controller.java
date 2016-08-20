@@ -52,8 +52,15 @@ public class Controller{
 	public static boolean isPresent(){
 		return glfwJoystickPresent(GLFW_JOYSTICK_1);
 	}
-	public static int getButtonState(int buttonID){
+	private static int getButtonState(int buttonID){
 		return buttons[buttonID];
+	}
+	public static boolean isButtonPressed(int buttonID){
+		return getButtonState(buttonID) == BUTTON_PRESSED;
+	}
+	public static boolean isButtonDown(int buttonID){
+		int buttonState = getButtonState(buttonID);
+		return buttonState == BUTTON_PRESSED | buttonState == BUTTON_UNCHANGED_FROM_PRESS;
 	}
 	public static float getAxisState(int axisID){
 		return axes[axisID];
