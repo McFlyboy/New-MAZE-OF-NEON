@@ -4,7 +4,6 @@ import com.nyhammer.newMON.entities.Camera;
 import com.nyhammer.newMON.entities.ModelEntity;
 import com.nyhammer.newMON.graphics.Render;
 import com.nyhammer.newMON.graphics.shading.shaderPrograms.MONShader;
-import com.nyhammer.newMON.input.Controller;
 import com.nyhammer.newMON.input.Keyboard;
 import com.nyhammer.newMON.input.Mouse;
 import com.nyhammer.newMON.ui.GameWindow;
@@ -20,7 +19,7 @@ public class Main{
 	public static final int VERSION_MAJOR = 0;
 	public static final int VERSION_MINOR = 1;
 	public static final int VERSION_REVISION = 1;
-	public static final int VERSION_SUB_REVISION = 0;
+	public static final int VERSION_SUB_REVISION = 1;
 	public static final String PRE_VERSION_SUFFIX = "a";
 	public static final String TITLE = "New MAZE OF NEON - Version " + getVersion();
 	private MONShader shader;
@@ -30,7 +29,6 @@ public class Main{
 	public static final float FOV = 70f;
 	public static final float NEAR_PLANE = 0.1f;
 	public static final float FAR_PLANE = 1000f;
-	public static boolean gameFocused = false;
 	public static String getVersion(){
 		StringBuilder version = new StringBuilder();
 		version.append(VERSION_MAJOR + "." + VERSION_MINOR + "." + VERSION_REVISION);
@@ -103,50 +101,10 @@ public class Main{
 		stop();
 	}
 	private void update(float delta){
-		if(Controller.isPresent()){
-			Controller.updateButtonState();
-			Controller.updateAxisStates();
-		}
-		if(Keyboard.isKeyPressed(Keyboard.KEY_ESCAPE) | Controller.isButtonPressed(Controller.BUTTON_START)){
-			GameWindow.close();
-		}
-		if(Keyboard.isKeyPressed(Keyboard.KEY_F11) | Controller.isButtonPressed(Controller.BUTTON_BACK)){
-			if(!GameWindow.isFullscreen()){
-				GameWindow.setFullscreen(true);
-			}
-			else{
-				GameWindow.setFullscreen(false);
-			}
-		}
-		if(Keyboard.isKeyPressed(Keyboard.KEY_V) | Controller.isButtonPressed(Controller.BUTTON_RB)){
-			if(!GameWindow.isVSync()){
-				GameWindow.setVSync(true);
-			}
-			else{
-				GameWindow.setVSync(false);
-			}
-		}
-		if(Keyboard.isKeyPressed(Keyboard.KEY_F) | Controller.isButtonPressed(Controller.BUTTON_LB)){
-			if(!Render.isWireframe()){
-				Render.setWireframe(true);
-			}
-			else{
-				Render.setWireframe(false);
-			}
-		}
-		if(Mouse.isButtonPressed(Mouse.BUTTON_LEFT) && !gameFocused){
-			Mouse.getDXpos();
-			Mouse.getDYpos();
-			gameFocused = true;
-			Mouse.setCursorMode(Mouse.CURSOR_MODE_DISABLED);
-		}
-		if(GameWindow.isFocused() == false){
-			gameFocused = false;
-			Mouse.setCursorMode(Mouse.CURSOR_MODE_NORMAL);
-		}
 		finish.transformation.angle.y += 50f * delta;
 		finish.transformation.position.y += (float)(Math.sin(Timer.getTime()) * delta / 8.0);
-		camera.move(delta);
+		PlayerControls.update();
+		PlayerControls.updateCamera(camera, delta);
 	}
 	private void render(){
 		Render.clear();
